@@ -30,6 +30,15 @@ const Gameboard = (() => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
     };
 
-    
+    const makeMove = (index) => {
+        if (board[index] === "") {
+            board[index] = currentPlayer.symbol;
+            switchPlayer();
+            return true;
+        } else {
+            return false;
+        }
+    };
+
 
 })();
