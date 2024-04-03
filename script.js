@@ -4,7 +4,10 @@ const Player = (name, symbol) => {
 
 const Gameboard = (() => {
     let board = ["","","","","","","","",""];
-    let currentPlayer = null;
+
+    const player1 = Player("Player 1", "X");
+    const player2 = Player("Player 2", "O");
+    let currentPlayer = player1;
 
     const Winner = () => {
         const winCombinations = [
@@ -33,12 +36,25 @@ const Gameboard = (() => {
     const makeMove = (index) => {
         if (board[index] === "") {
             board[index] = currentPlayer.symbol;
+
+            if(Winner()){
+                console.log(currentPlayer.name + "Won the game!");
+                return;
+            }
+
+            if(checkTie()){
+                console.log("It's Tie!");
+                return;
+            }
+
             switchPlayer();
-            return true;
         } else {
-            return false;
+            console.log("You can't make move here")
         }
     };
 
+    return {makeMove, checkTie, Winner, switchPlayer};
 
 })();
+
+Gameboard.makeMove(0);
