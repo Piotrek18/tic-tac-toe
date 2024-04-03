@@ -4,6 +4,7 @@ const Player = (name, symbol) => {
 
 const Gameboard = (() => {
     let board = ["","","","","","","","",""];
+    let currentPlayer = null;
 
     const Winner = () => {
         const winCombinations = [
@@ -25,4 +26,10 @@ const Gameboard = (() => {
         return !board.includes("");
     };
     
+    const switchPlayer = () => {
+        currentPlayer = currentPlayer === player1 ? player2 : player1;
+    };
+
+    
+
 })();
