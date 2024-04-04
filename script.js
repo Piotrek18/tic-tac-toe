@@ -67,4 +67,10 @@ const Gameboard = (() => {
 
 })();
 
-Gameboard.makeMove(0);
+const cells = document.querySelectorAll("td");
+
+cells.forEach((cell, index) => {
+    cell.addEventListener("click", () => {
+        Gameboard.makeMove(index);
+    });
+});
