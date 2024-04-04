@@ -33,17 +33,25 @@ const Gameboard = (() => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
     };
 
+    const updateBoard = () => {
+        for (let i=0; i<board.length; i++) {
+            document.getElementById("cell" + i).innerText = board[i];
+        }
+    };
+
     const makeMove = (index) => {
         if (board[index] === "") {
             board[index] = currentPlayer.symbol;
 
             if(Winner()){
                 console.log(currentPlayer.name + "Won the game!");
+                updateBoard();
                 return;
             }
 
             if(checkTie()){
                 console.log("It's Tie!");
+                updateBoard();
                 return;
             }
 
@@ -51,6 +59,8 @@ const Gameboard = (() => {
         } else {
             console.log("You can't make move here")
         }
+
+        updateBoard();
     };
 
     return {makeMove, checkTie, Winner, switchPlayer};
