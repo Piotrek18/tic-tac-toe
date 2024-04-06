@@ -4,6 +4,7 @@ const Player = (name, symbol) => {
 
 const Gameboard = (() => {
     let board = ["","","","","","","","",""];
+    let gameOver = false;
 
     const player1 = Player("Player 1", "X");
     const player2 = Player("Player 2", "O");
@@ -26,7 +27,7 @@ const Gameboard = (() => {
     };
 
     const checkTie = () => {
-        return !board.includes("");
+        return !board.includes("") && !Winner();
     };
     
     const switchPlayer = () => {
@@ -39,19 +40,41 @@ const Gameboard = (() => {
         }
     };
 
+    const openDialog = (message) => {
+        const dialog = document.getElementById("dialog");
+        const winnerMessage = document.getElementById("winnerMessage");
+        winnerMessage.textContent = message;
+        dialog.style.display = "block";
+    };
+
+    const closeDialog = () => {
+        const dialog = document.getElementById("dialog");
+        dialog.style.display = "none";
+    };
+
+    const resetGame = () => {
+        board = ["","","","","","","","",""];
+        currentPlayer = player1;
+        gameOver = false;
+        updateBoard();
+        closeDialog();
+    }
+
     const makeMove = (index) => {
-        if (board[index] === "") {
+        if (!gameOver && board[index] === "") {
             board[index] = currentPlayer.symbol;
 
             if(Winner()){
-                console.log(currentPlayer.name + "Won the game!");
+                openDialog(currentPlayer.name + "Won the game!");
                 updateBoard();
+                gameOver = true;
                 return;
             }
 
             if(checkTie()){
-                console.log("It's Tie!");
+                openDialog("It's Tie!");
                 updateBoard();
+                gameOver = true;
                 return;
             }
 
@@ -63,7 +86,7 @@ const Gameboard = (() => {
         updateBoard();
     };
 
-    return {makeMove, checkTie, Winner, switchPlayer};
+    return {makeMove, checkTie, Winner, switchPlayer, resetGame, board, currentPlayer, gameOver};
 
 })();
 
@@ -73,4 +96,8 @@ cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
         Gameboard.makeMove(index);
     });
+});
+
+document.getElementById("resetButton").addEventListener("click", () => {
+    Gameboard.resetGame();
 });
