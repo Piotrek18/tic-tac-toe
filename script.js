@@ -32,6 +32,8 @@ const Gameboard = (() => {
     
     const switchPlayer = () => {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
+        const playerTurnDisplay = document.getElementById("playerTurn");
+        playerTurnDisplay.textContent = currentPlayer.name + " turn!";
     };
 
     const updateBoard = () => {
@@ -65,7 +67,7 @@ const Gameboard = (() => {
             board[index] = currentPlayer.symbol;
 
             if(Winner()){
-                openDialog(currentPlayer.name + "Won the game!");
+                openDialog(currentPlayer.name + " Won the game!");
                 updateBoard();
                 gameOver = true;
                 return;
